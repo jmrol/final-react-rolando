@@ -1,40 +1,54 @@
-import React ,{useState, createContext } from "react";
+import React, { useState, createContext } from "react";
 
 export const CartContext = createContext()
 
-const CartProvider= ({children}) => {
-    
-const [cart,setCart] =useState([])
-const [total,setTotal]  =useState(0)
-const [totalQuantity,setTotalQuantity] =useState(9)
+const CartProvider = ({ children }) => {
 
-const agregarCarrito =(products,count) =>{
+    const [cart, setCart] = useState([])
+    const [total, setTotal] = useState(0)
+    const [totalQuantity, setTotalQuantity] = useState(9)
 
-    console.log(products)
-    console.log(count)
+    const agregarCarrito = (producto, cantidad) => {
+        const productoExistente = cart.findIndex(prod => prod.producto.id == producto.id)
 
-}
+        if (productoExistente == -1) {
+            setCart([...cart, { producto, cantidad }])
+        } else {
+            const newCart = [...cart]
+            newCart[productoExistente].cantidad += cantidad
+            setCart(newCart)
+        }
+    }
 
-const eliminarItem =() =>{
-    
-}
-  
-const vaciarCarrito =() =>{
-    
-}
+    const eliminarItem = (productoId) => {
+        const newCart = cart.filter(item => item.producto.id !== productoId)
+        setCart(newCart)
+    }
 
-const cantidadCarrito =() =>{
-    
-}
+    const vaciarCarrito = () => {
+        setCart([])
+    }
 
-const totalCarrito =() =>{
-    
-}
+    const cantidadCarrito = () => {
+        const totalQuantity = cart.reduce((total, item) => total + item.cantidad, 0)
+        return totalQuantity
+    }
 
-    return(
-        
-        <CartContext.Provider value={{cart,total,totalQuantity,agregarCarrito}} >
-         {children}   
+    const totalCarrito = () => {
+        const totalPrice = cart.reduce((total, item) => total + (item.producto.precio * item.cantidad), 0)
+        return totalPrice
+    }
+
+    return (
+        <CartContext.Provider value={{
+            cart,
+            agregarCarrito,
+            eliminarItem,
+            vaciarCarrito,
+            cantidadCarrito,
+            totalCarrito
+        }}>
+            {children}
         </CartContext.Provider>
     )
 }

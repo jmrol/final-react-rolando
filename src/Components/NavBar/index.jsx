@@ -6,10 +6,10 @@ const NavBar = () => {
         <nav className="NavBar">
             <Link to={"/"}>-   <h3> Tienda Laser   navbar</h3>   </Link>
             <div className="Categories">
-                <Link to={`/category/electronics`}>-  electronics      </Link>
-                <Link to={`/category/jewelery`}> - jewelery     </Link>
-                <Link to={`/category/men's clothing`}> - men's clothing     </Link>
-                <Link to={`/category/women's clothing`}>-  women's clothing     </Link>
+                <Link to={`/category/Ropa`}>-  Ropa     </Link>
+                <Link to={`/category/Hogar`}> - Hogar     </Link>
+                <Link to={`/category/Calzado`}> - Calzado     </Link>
+                <Link to={`/category/Tecnología`}>-  Tecnología     </Link>
             </div>
             <CartWidget />
         </nav>
