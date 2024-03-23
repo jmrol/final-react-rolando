@@ -1,21 +1,21 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { db } from '../../firebase/firebase';
-import { collection,addDoc,updateDoc,doc,getDoc } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { CartContext } from '../../Context/CartContext';
 
 const Checkout = () => {
 
     //INFORMACIÓN DEL CONTEXT
-    const {cart,totalCarrito,cantidadCarrito,vaciarCarrito} = useContext(CartContext)
+    const { cart, totalCarrito, cantidadCarrito, vaciarCarrito } = useContext(CartContext)
 
     //DATOS DEL COMPONENT
-    const [nombre,setNombre] = useState("")
-    const [apellido,setApellido] = useState("")
-    const [telefono,setTelefono] = useState("")
-    const [email,setEmail] = useState("")
-    const [emailConfirmacion,setEmailConfirmacion] = useState("")
-    const [error,setError] = useState("")
-    const [ordenId,setOrdenId] = useState("")
+    const [nombre, setNombre] = useState("")
+    const [apellido, setApellido] = useState("")
+    const [telefono, setTelefono] = useState("")
+    const [email, setEmail] = useState("")
+    const [emailConfirmacion, setEmailConfirmacion] = useState("")
+    const [error, setError] = useState("")
+    const [ordenId, setOrdenId] = useState("")
 
     //SUBMIT
     const manejadorFormulario = (event) => {
@@ -24,12 +24,12 @@ const Checkout = () => {
         event.preventDefault()
 
         //ALGUNOS MANEJOS DE ERRORES
-        if(!nombre || !apellido || !telefono || !email || !emailConfirmacion){
+        if (!nombre || !apellido || !telefono || !email || !emailConfirmacion) {
             setError("Completar los campos requeridos")
             return;
         }
 
-        if(email !== emailConfirmacion) {
+        if (email !== emailConfirmacion) {
             setError("Los campos del email no coinciden")
             return;
         }
@@ -52,7 +52,7 @@ const Checkout = () => {
         //GENERAMOS LA LÓGICA PARA LA ÓRDEN Y REDUCCIÓN DEL STOCK
         Promise.all(
             orden.items.map(async (productoOrden) => {
-                const productoRef = doc(db,"item",productoOrden.id);
+                const productoRef = doc(db, "item", productoOrden.id);
                 const productoDoc = await getDoc(productoRef)
                 const stockActual = productoDoc.data().stock
 
@@ -61,23 +61,23 @@ const Checkout = () => {
                 })
             })
         )
-        .then(() => {
-            addDoc(collection(db,"ordenes"),orden)
-            .then((docRef) => {
-                setError("")
-                setOrdenId(docRef.id)
-                vaciarCarrito()
+            .then(() => {
+                addDoc(collection(db, "ordenes"), orden)
+                    .then((docRef) => {
+                        setError("")
+                        setOrdenId(docRef.id)
+                        vaciarCarrito()
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                        setError("Se produjo un error al crear la orden")
+                    })
+
             })
             .catch((error) => {
                 console.log(error)
-                setError("Se produjo un error al crear la orden")
+                setError("No se puede actualizar el stock")
             })
-
-        })
-        .catch((error) => {
-            console.log(error)
-            setError("No se puede actualizar el stock")
-        })
     }
 
 
@@ -98,11 +98,11 @@ const Checkout = () => {
                             {""}
                             {producto.producto.nombre} x {producto.cantidad}
                         </p>
-                        <hr/>
+                        <hr />
 
                     </div>
-                    
-                    
+
+
                 ))}
 
                 {/* CAMPOS DEL FORMULARIO */}
@@ -110,32 +110,32 @@ const Checkout = () => {
 
                     <div>
                         <label htmlFor="Nombre">Nombre</label>
-                        <input name="Nombre" type='text' onChange={(e) => setNombre(e.target.value)}/>
+                        <input name="Nombre" type='text' onChange={(e) => setNombre(e.target.value)} />
                     </div>
 
                     <div>
                         <label htmlFor="Apellido">Apellido</label>
-                        <input name="Apellido" type='text' onChange={(e) => setApellido(e.target.value)}/>
+                        <input name="Apellido" type='text' onChange={(e) => setApellido(e.target.value)} />
                     </div>
 
                     <div>
                         <label htmlFor="Nombre">Teléfono</label>
-                        <input name="Teléfono" type='text' onChange={(e) => setTelefono(e.target.value)}/>
+                        <input name="Teléfono" type='text' onChange={(e) => setTelefono(e.target.value)} />
                     </div>
 
                     <div>
                         <label htmlFor="Email">Email</label>
-                        <input name="Email" type='email' onChange={(e) => setEmail(e.target.value)}/>
+                        <input name="Email" type='email' onChange={(e) => setEmail(e.target.value)} />
                     </div>
 
                     <div>
                         <label htmlFor="EmailConfirmacion">Email Confirmacion</label>
-                        <input name="EmailConfirmacion" type='email' onChange={(e) => setEmailConfirmacion(e.target.value)}/>
+                        <input name="EmailConfirmacion" type='email' onChange={(e) => setEmailConfirmacion(e.target.value)} />
                     </div>
 
                     <button type='submit'>Completar compra</button>
 
-                    {error && <p style={{color: "red"}}>{error}</p>}
+                    {error && <p style={{ color: "red" }}>{error}</p>}
 
                     {ordenId && (
                         <strong>
@@ -144,7 +144,7 @@ const Checkout = () => {
                     )}
 
                 </div>
-                
+
             </form>
         </div>
     );

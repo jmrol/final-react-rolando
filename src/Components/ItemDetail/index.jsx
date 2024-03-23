@@ -10,10 +10,10 @@ const ItemDetail = (products) => {
     const [cart, setCart] = useState(false)
 
     const { agregarCarrito } = useContext(CartContext)
-    const onAdd = (count) =>{
+    const onAdd = (count) => {
         setCart(true)
-        console.log ('Cantidad agregada',count)
-    agregarCarrito(products,count)
+        console.log('Cantidad agregada', count)
+        agregarCarrito(products, count)
     }
 
     return (
@@ -31,7 +31,7 @@ const ItemDetail = (products) => {
                 <p className="Info">Descripcion:{products.description}</p>
                 <p className="Info">Precio:${products.price}</p>
 
-                {cart ? <Link to={'/cart'}>Ver carrito</Link> :<ItemCount initial={1} stock={10} onAdd={onAdd} />}
+                {cart ? <Link to={'/cart'}>Ver carrito</Link> : <ItemCount initial={1} stock={10} onAdd={onAdd} />}
 
             </section>
             <footer className="ItemFooter">

@@ -1,4 +1,4 @@
-const HomeContainer = () =>{
+const HomeContainer = () => {
     return (
         <div></div>
     )
