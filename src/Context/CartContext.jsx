@@ -35,7 +35,7 @@ const CartProvider = ({ children }) => {
     }
 
     const totalCarrito = () => {
-        const totalPrice = cart.reduce((total, item) => total + (item.producto.precio * item.cantidad), 0)
+        const totalPrice = cart.reduce((total, item) => total + (item.producto.price * item.cantidad), 0)
         return totalPrice
     }
 

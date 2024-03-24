@@ -38,7 +38,7 @@ const Checkout = () => {
         const orden = {
             items: cart.map((producto) => ({
                 id: producto.producto.id,
-                nombre: producto.producto.nombre,
+                nombre: producto.producto.title,
                 cantidad: producto.cantidad
             })),
             total: totalCarrito(),
@@ -52,12 +52,14 @@ const Checkout = () => {
         //GENERAMOS LA LÓGICA PARA LA ÓRDEN Y REDUCCIÓN DEL STOCK
         Promise.all(
             orden.items.map(async (productoOrden) => {
-                const productoRef = doc(db, "item", productoOrden.id);
+                const productoRef = doc(db, "productos", productoOrden.id);
                 const productoDoc = await getDoc(productoRef)
                 const stockActual = productoDoc.data().stock
 
                 await updateDoc(productoRef, {
                     stock: stockActual - productoOrden.cantidad
+
+
                 })
             })
         )
@@ -79,8 +81,6 @@ const Checkout = () => {
                 setError("No se puede actualizar el stock")
             })
     }
-
-
 
     return (
         <div>

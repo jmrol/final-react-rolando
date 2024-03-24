@@ -10,8 +10,9 @@ const CartWidget = () => {
 
     return (
         <div>
-            <Link to={'/cart'}>- <img src={cart} alt="cart-widget" width={50} />   </Link>
-            <p>{cantidadCarrito() == 0 ? null : cantidadCarrito()}</p>
+            <Link to={'/cart'}>- <img src={cart} alt="cart-widget" width={40} />   
+            <p>{cantidadCarrito() == 0 ? null : cantidadCarrito()}</p> </Link>
+           
         </div>
     )
 }
