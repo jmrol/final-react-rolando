@@ -96,7 +96,7 @@ const Checkout = () => {
 
                         <p>
                             {""}
-                            {producto.producto.nombre} x {producto.cantidad}
+                            {producto.producto.title} x {producto.cantidad}
                         </p>
                         <hr />
 

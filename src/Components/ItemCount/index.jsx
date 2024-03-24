@@ -17,7 +17,7 @@ const ItemCount = ({ initial, stock, onAdd }) => {
     }
 
     return (
-        <div className='Counter' style={{ backgroundColor: 'blue' }} >
+        <div className='Counter' style={{ backgroundColor: 'skyblue' }} >
             <div className='Controls'>
                 <button className='Button' onClick={decrement}>-</button>
                 <h4 className='Number'>{quantity}</h4>

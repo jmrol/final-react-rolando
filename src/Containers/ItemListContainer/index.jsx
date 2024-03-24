@@ -34,7 +34,7 @@ const ItemListContainer = () => {
 
 
     return (
-        <div className="App" style={{ backgroundColor: 'purple' }}>
+        <div className="App" style={{ backgroundColor: 'pink' }}>
             <header className="App-header">
                 <div>
 

@@ -16,8 +16,6 @@ const Item = ({ producto, cart, setCart }) => {
                 <p>{producto.title}</p>
                 <p>$ {producto.price}</p>
             </div>
-            {/* <button onClick={addToCart} > Agregar</button> */}
-
             <Link to={`/item/${producto.id}`}>ver detalle</Link>
 
         </div>
